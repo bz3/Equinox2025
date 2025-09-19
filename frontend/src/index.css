@@ -1,0 +1,19 @@
+/* Simplified base styles for the demo UI */
+:root { font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; }
+
+body { margin: 0; background: #fff; color: #111; }
+
+a { color: #2563eb; text-decoration: none; }
+
+a:hover { text-decoration: underline; }
+
+button {
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 0.9rem;
+  font-size: 1rem;
+  background: #f3f4f6;
+  cursor: pointer;
+}
+
+button:disabled { opacity: 0.5; cursor: not-allowed; }
