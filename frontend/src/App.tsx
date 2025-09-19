@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { apiCalls, apiCalendar, apiReminders, apiTriage, apiTranscribe } from './lib/api'
+import { apiCalls, apiCalendar, apiReminders, apiTriage, apiTranscribe, getCurrentApiBase, setApiBase } from './lib/api'
 
 type CallRow = {
   id: string
@@ -16,6 +16,7 @@ function App() {
   const [transcript, setTranscript] = useState('')
   const [source, setSource] = useState('simulado')
   const [loading, setLoading] = useState(false)
+  const [apiBase, setApiBaseState] = useState<string>(getCurrentApiBase())
   const [lastResult, setLastResult] = useState<any | null>(null)
   const [calls, setCalls] = useState<CallRow[]>([])
   const [calendar, setCalendar] = useState<any[]>([])
@@ -55,12 +56,24 @@ function App() {
     refreshData()
   }, [])
 
+  function handleSaveApiBase() {
+    setApiBase(apiBase)
+  }
+
   return (
     <div style={{ padding: 24, maxWidth: 960, margin: '0 auto', fontFamily: 'system-ui, sans-serif' }}>
       <h1>Asistente de Llamadas - Demo</h1>
       <p>Sube un audio o pega un texto para simular la llamada. El asistente hará triage y creará acciones.</p>
 
       <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 16 }}>
+        <div style={{ border: '1px solid #ddd', borderRadius: 8, padding: 16 }}>
+          <h2>Settings</h2>
+          <label>
+            API Base:
+            <input value={apiBase} onChange={e => setApiBaseState(e.target.value)} style={{ marginLeft: 8, width: '100%' }} />
+          </label>
+          <button onClick={handleSaveApiBase} style={{ marginTop: 8 }}>Guardar</button>
+        </div>
         <div style={{ border: '1px solid #ddd', borderRadius: 8, padding: 16 }}>
           <h2>1) Audio</h2>
           <input type="file" accept="audio/*" onChange={e => setFile(e.target.files?.[0] || null)} />

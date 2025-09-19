@@ -38,6 +38,15 @@ app.get('/api/health', (_req: Request, res: Response) => {
   res.json({ ok: true });
 });
 
+// Status and config visibility (no secrets)
+app.get('/api/status', (_req: Request, res: Response) => {
+  res.json({
+    ok: true,
+    openaiConfigured: Boolean(process.env.OPENAI_API_KEY),
+    env: process.env.NODE_ENV || 'development',
+  });
+});
+
 // Upload audio and transcribe
 app.post('/api/transcribe', upload.single('audio'), async (req: Request, res: Response) => {
   try {
